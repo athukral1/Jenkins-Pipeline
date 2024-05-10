@@ -8,7 +8,6 @@ pipeline {
         ANALYSE_TOOL = "FindBug"
         SECURITY_SCAN = "Checkmarx"
         SERVER = "AWS EC2 instance"
-        DEPLOY_TO_PRODUCTION = ""
     }
 
     stages {
