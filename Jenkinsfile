@@ -19,21 +19,19 @@ pipeline {
 
         stage('Unit and Integration Tests') {
             steps {
-                echo "Run unit test using ${env.UNIT_TEST_TOOL} to ensure code functions as expected."
+                echo "Run unit test using ${env.UNIT_TEST_TOOL} to ensure code functions as expected. "
                 echo "Run integration test using ${env.INTEGRATION_TEST_TOOL} the different components of the application work together as expected."
             }
             post {
                 success {
-                    emailext attachmentsPattern: 'logs/*.log',
-                             body: "Unit and Integration Tests were successful!",
-                             subject: "Unit and Integration Test Status Email.",
-                             to: "ayushithukral0@gmail.com"
+                    mail to: "ayushithukral0@gmail.com",
+                    subject: "Unit and Integration Test Status Email.",
+                    body: "Unit and Integration Tests were successful!"
                 }
                 failure {
-                    emailext attachmentsPattern: 'logs/*.log',
-                             body: "Unit and Integration Tests were unsuccessful!",
-                             subject: "Unit and Integration Test Status Email.",
-                             to: "ayushithukral0@gmail.com"
+                    mail to: "ayushithukral0@gmail.com",
+                    subject: "Unit and Integration Test Status Email.",
+                    body: "Unit and Integration Tests were unsuccessful!"
                 }
             }
         }
@@ -46,20 +44,21 @@ pipeline {
 
         stage('Security Scan') {
             steps {
-                echo "Perform a security scan on the code using ${env.SECURITY_SCAN} to identify any vulnerabilities."
+                echo "Perform a security scan on the code using ${env.SECURITY_SCAN} to identify any vulnerabilities. "
             }
             post {
                 success {
-                    emailext attachmentsPattern: 'logs/*.log',
-                             body: "Security Scan was successful!",
-                             subject: "Security Scan Status Email.",
-                             to: "ayushithukral0@gmail.com"
+                    emailext(
+                    mail to: "ayushithukral0@gmail.com",
+                    subject: "Security Scan Status Email.",
+                    body: "Security Scan was successful!"
+                    attachLog: true
+                    )
                 }
                 failure {
-                    emailext attachmentsPattern: 'logs/*.log',
-                             body: "Security Scan was unsuccessful!",
-                             subject: "Security Scan Status Email.",
-                             to: "ayushithukral0@gmail.com"
+                    mail to: "ayushithukral0@gmail.com",
+                    subject: "Security Scan Status Email.",
+                    body: "Security Scan was unsuccessful!"
                 }
             }
         }
@@ -73,27 +72,25 @@ pipeline {
 
         stage('Integration Tests on Staging') {
             steps {
-                echo "Run integration tests on the staging environment to ensure the application functions as expected in a production-like environment."
+                echo "Run integration tests on the staging environment to ensure the application functions as expected in a production-like environment. "
             }
             post {
                 success {
-                    emailext attachmentsPattern: 'logs/*.log',
-                             body: "Integration Tests on Staging were successful!",
-                             subject: "Integration Tests on Staging Status Email.",
-                             to: "ayushithukral0@gmail.com"
+                    mail to: "ayushithukral0@gmail.com",
+                    subject: "Integration Tests on Staging Status Email.",
+                    body: "Integration Tests on Staging were successful!"
                 }
                 failure {
-                    emailext attachmentsPattern: 'logs/*.log',
-                             body: "Integration Tests on Staging were unsuccessful!",
-                             subject: "Integration Tests on Staging Status Email.",
-                             to: "ayushithukral0@gmail.com"
+                    mail to: "ayushithukral0@gmail.com",
+                    subject: "Integration Tests on Staging Status Email.",
+                    body: "Integration Tests on Staging were unsuccessful!"
                 }
             }
         }
 
         stage('Deploy to Production') {
             steps {
-                echo "Deploy the application to ${env.SERVER}"
+                echo "Deploy the application to ${env.SERVER} "
             }
         }
     }
