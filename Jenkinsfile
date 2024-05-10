@@ -75,12 +75,12 @@ pipeline {
                 success {
                     mail to: "ayushithukral0@gmail.com",
                     subject: "Integration Tests on Staging Status Email.",
-                    body: "Integration Tests on Staging was successful!"
+                    body: "Integration Tests on Staging were successful!"
                 }
                 failure {
                     mail to: "ayushithukral0@gmail.com",
                     subject: "Integration Tests on Staging Status Email.",
-                    body: "Integration Tests on Staging was unsuccessful!"
+                    body: "Integration Tests on Staging were unsuccessful!"
                 }
             }
         }
