@@ -13,98 +13,79 @@ pipeline {
     stages {
         stage('Build') {
             steps {
-                echo "Build the code using ${env.BUILD_AUTOMATION_TOOL} to compile and package the code."
+                echo "Building the code using ${env.BUILD_AUTOMATION_TOOL} to compile and package."
             }
         }
 
         stage('Unit and Integration Tests') {
             steps {
-                echo "Run unit test using ${env.UNIT_TEST_TOOL} to ensure code functions as expected."
-                echo "Run integration test using ${env.INTEGRATION_TEST_TOOL} the different components of the application work together as expected."
+                echo "Running unit tests with ${env.UNIT_TEST_TOOL} to ensure code functionality."
+                echo "Running integration tests with ${env.INTEGRATION_TEST_TOOL} to validate system components."
             }
             post {
                 success {
-                    emailext subject: "Unit and Integration Test Status Email.",
-                        body: "Unit and Integration Tests were successful!",
-                        to: "ayushithukral0@gmail.com",
-                        attachLog: true
-                    
+                    emailNotification("Unit and Integration Test Status", "Unit and Integration Tests were successful!")
                 }
                 failure {
-                    emailext subject: "Unit and Integration Test Status Email.",
-                        body: "Unit and Integration Tests were unsuccessful!",
-                        to: "ayushithukral0@gmail.com",
-                        attachLog: true
-                    
+                    emailNotification("Unit and Integration Test Status", "Unit and Integration Tests failed!")
                 }
             }
         }
 
         stage('Code Check') {
             steps {
-                echo "Use ${env.ANALYSE_TOOL} to analyse the code and ensure it meets industry standards."
+                echo "Analyzing code with ${env.ANALYSE_TOOL} to ensure industry standards."
             }
         }
 
         stage('Security Scan') {
             steps {
-                echo "Perform a security scan on the code using ${env.SECURITY_SCAN} to identify any vulnerabilities."
+                echo "Performing security scan with ${env.SECURITY_SCAN} to identify vulnerabilities."
             }
             post {
                 success {
-                    emailext(
-                        to: "ayushithukral0@gmail.com",
-                        subject: "Security Scan Status Email.",
-                        body: "Security Scan was successful!",
-                        attachLog: true
-                    )
+                    emailNotification("Security Scan Status", "Security Scan was successful!")
                 }
                 failure {
-                    emailext(
-                        to: "ayushithukral0@gmail.com",
-                        subject: "Security Scan Status Email.",
-                        body: "Security Scan was unsuccessful!",
-                        attachLog: true
-                    )
+                    emailNotification("Security Scan Status", "Security Scan failed!")
                 }
             }
         }
 
         stage('Deploy to Staging') {
             steps {
-                echo "Deploy the application to ${env.SERVER}"
+                echo "Deploying the application to ${env.SERVER} for staging."
                 sleep 10
             }
         }
 
         stage('Integration Tests on Staging') {
             steps {
-                echo "Run integration tests on the staging environment to ensure the application functions as expected in a production-like environment."
+                echo "Running integration tests on staging environment."
             }
             post {
                 success {
-                    emailext(
-                        to: "ayushithukral0@gmail.com",
-                        subject: "Integration Tests on Staging Status Email.",
-                        body: "Integration Tests on Staging were successful!",
-                        attachLog: true
-                    )
+                    emailNotification("Integration Tests on Staging Status", "Integration Tests on Staging were successful!")
                 }
                 failure {
-                    emailext(
-                        to: "ayushithukral0@gmail.com",
-                        subject: "Integration Tests on Staging Status Email.",
-                        body: "Integration Tests on Staging were unsuccessful!",
-                        attachLog: true
-                    )
+                    emailNotification("Integration Tests on Staging Status", "Integration Tests on Staging failed!")
                 }
             }
         }
 
         stage('Deploy to Production') {
             steps {
-                echo "Deploy the application to ${env.SERVER}"
+                echo "Deploying the application to ${env.SERVER} for production."
             }
         }
     }
+}
+
+def emailNotification(subject, body) {
+    emailext(
+        to: "ayushithukral0@gmail.com",
+        subject: subject,
+        body: body,
+        attachLog: true
+    )
 }
