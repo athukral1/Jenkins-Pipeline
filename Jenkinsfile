@@ -11,7 +11,7 @@ pipeline {
         stage('Build') {
             steps {
                 echo "Build the code using ${env.BUILD_AUTOMATION_TOOL} to compile and package the code."
-                sh "${env.BUILD_AUTOMATION_TOOL} cleans package"
+                
             }
         }
     
