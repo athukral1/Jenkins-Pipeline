@@ -64,6 +64,7 @@ pipeline {
         stage('Deploy to Staging') {
             steps {
                 echo "Deploy the application to ${env.SERVER}"
+                sleep 10
             }
         }
 
