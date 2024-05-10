@@ -49,7 +49,7 @@ pipeline {
             post {
                 success {
                     emailext(
-                    mail to: "ayushithukral0@gmail.com",
+                    to: "ayushithukral0@gmail.com",
                     subject: "Security Scan Status Email.",
                     body: "Security Scan was successful!"
                     attachLog: true
