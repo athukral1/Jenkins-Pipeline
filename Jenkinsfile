@@ -2,22 +2,22 @@ pipeline {
     agent any
 
     environment {
-        DIRECTORY_PATH = "C:\\Users\\ayush\\OneDrive\\Documents\\Y2 T1\\SIT223"
-        TESTING_ENVIRONMENT = "Development Environment"
-        PRODUCTION_ENVIRONMENT = "Cloud Services"
+        BUILD_AUTOMATION_TOOL = "Maven"
+        UNIT_TEST_TOOL = "JUnit"
+        INTEGRATION_TEST_TOOL = "Protractor"
     }
 
     stages {
         stage('Build') {
             steps {
-                echo "Fetch the source code from ${env.DIRECTORY_PATH}"
-                echo "Compile the code and generate any necessary artifacts"
+                echo "Build the code using ${env.BUILD_AUTOMATION_TOOL} to compile and package the code."
+                sh "${env.BUILD_AUTOMATION_TOOL} cleans package"
             }
         }
     
-        stage('Test') {
+        stage('Unit and Integration Tests') {
             steps {
-                echo "Unit Test"
+                echo "Run unit test using ${env.UNIT_TEST_TOOL} to ensure code functions as expected. "
                 echo "Integration Test"
             }
         }
@@ -30,7 +30,7 @@ pipeline {
 
         stage('Deploy') {
             steps {
-                echo "Deploy the application to a testing environment specified by the ${env.TESTING_ENVIRONMENT}"
+                echo "Deploy the application to a testing environment specified by the "
             }
         }
 
@@ -43,7 +43,7 @@ pipeline {
 
         stage('Deploy to Production') {
             steps {
-                echo "Deploy the code to the ${env.PRODUCTION_ENVIRONMENT}"
+                echo "Deploy the code to the "
             }
         }
     }
